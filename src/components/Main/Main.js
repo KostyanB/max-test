@@ -5,6 +5,7 @@ import {RepeatItem} from './RepeatItem';
 import MainItem from "./MainItem";
 
 const MainWrap = styled.main`
+    flex: auto;
     display: flex;
     flex-direction: column;
     width: 100%;
