@@ -6,7 +6,8 @@ export const useShowOnPage = () => {
         [ showOnPage, setShowOnPage ] = useState(),
         [ startIndex, setStartIndex ] = useState(0),
         [ stopIndex, setStopIndex ] = useState(),
-        [ settingsError, setSettingsError] = useState(null);
+        [ settingsError, setSettingsError] = useState(null),
+        [ settings, setSettings] = useState(null);
 
     useEffect(() => {
         (async () => {

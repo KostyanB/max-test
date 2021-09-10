@@ -59,12 +59,15 @@ const Header = () => {
         postList: { setCompleteFetch, getFetch },
         inputValue: { inputValue, setInputValue },
         labelText: { labelText },
+        showOnPage: { showOnPage, setStartIndex, setStopIndex },
     } = useContext(Context);
 
     const handleShowResult = val => {
         setCompleteFetch(false);
-        getFetch(val);
         setInputValue('');
+        setStartIndex(0);
+        setStopIndex(showOnPage - 1);
+        getFetch(val);
     };
 
     const handleChange = e => setInputValue(e.target.value);

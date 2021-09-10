@@ -43,7 +43,7 @@ const Main = () => {
         <MainWrap>
             <MainTitle>Результаты запроса: {mainTitle}</MainTitle>
             <ul>
-            {completeFetch &&
+            {(completeFetch && postList) &&
                 <RepeatItem start={startIndex}
                     stop={stopIndex}
                 >
