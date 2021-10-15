@@ -41,7 +41,7 @@ const Main = () => {
         <MainWrap>
             <MainTitle>Результаты запроса: {mainTitle}</MainTitle>
             <ul>
-                {postList.slice(startIndex, stopIndex + 1).map((item, i) =>
+                {postList && postList.slice(startIndex, stopIndex + 1).map((item, i) =>
                         <Item key={i} params={item.data}/>)
                 }
             </ul>
