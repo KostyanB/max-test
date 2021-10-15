@@ -1,38 +1,22 @@
 import React from 'react';
 import './App.scss';
-import { Context } from './components/functions/Context';
+import { ContextProvider } from './components/Context/Context';
 import Header from './components/Header/Header';
 import Main from './components/Main/Main';
-import Footer from './components/Footer/Footer';
-import { useInputValue } from './components/Hooks/useInputValue';
-import { useLabelText } from './components/Hooks/useLabelText';
-import { usePostList } from './components/Hooks/usePostList';
-import { useShowOnPage } from './components/Hooks/useShowOnPage';
-import { useDisableButton } from './components/Hooks/useDisableButton';
-
+import Pagination from './components/Pagination/Pagination';
+import { useGetPostList } from './components/Hooks/useGetPostList';
 
 function App() {
-
-  const inputValue = useInputValue(),
-    labelText = useLabelText(),
-    postList = usePostList(),
-    showOnPage = useShowOnPage(),
-    disableButton = useDisableButton();
+  const { complete } = useGetPostList();
 
   return (
-    <Context.Provider value={{
-      inputValue,
-      labelText,
-      postList,
-      showOnPage,
-      disableButton,
-    }}>
+    <ContextProvider>
       <div className="App">
         <Header/>
-        <Main/>
-        <Footer/>
+        {complete && <Main/>}
+        <Pagination/>
       </div>
-    </Context.Provider>
+    </ContextProvider>
   );
 }
 export default App;

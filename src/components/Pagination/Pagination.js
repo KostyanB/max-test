@@ -1,9 +1,9 @@
 import React, { useContext } from "react";
 import styled from 'styled-components';
-import { Context } from "../functions/Context";
+import { Context } from "../Context/Context";
 import { Button } from '../Styled/Button';
 
-const FooterWrap = styled.div`
+const PaginationWrap = styled.div`
     width: 100%;
     height: 80px;
     display: flex;
@@ -19,7 +19,7 @@ const NextButton = styled(PrevButton)`
 `;
 
 
-const Footer = () => {
+const Pagination = () => {
 
     const {
         showOnPage: { showOnPage, startIndex, setStartIndex, stopIndex, setStopIndex },
@@ -38,26 +38,26 @@ const Footer = () => {
     };
 
     const showNext = () => {
-        const newStart = stopIndex + 1,
-            newStop = Math.min(newStart + showOnPage, postList.length) - 1;
+        const newStartIndex = stopIndex + 1,
+            newStopIndex = Math.min(newStartIndex + showOnPage, postList.length) - 1;
 
-        setIndexes(newStart, newStop);
-        checkButton(newStart, newStop);
+        setIndexes(newStartIndex, newStopIndex);
+        checkButton(newStartIndex, newStopIndex);
     };
 
     const showPrev = () => {
-        const newStart = Math.max(startIndex - showOnPage, 0),
-            newStop = newStart + showOnPage -1;
+        const newStartIndex = Math.max(startIndex - showOnPage, 0),
+            newStopIndex = newStartIndex + showOnPage -1;
 
-        setIndexes(newStart, newStop);
-        checkButton(newStart, newStop);
+        setIndexes(newStartIndex, newStopIndex);
+        checkButton(newStartIndex, newStopIndex);
     };
 
     return (
-        <FooterWrap>
+        <PaginationWrap>
             <PrevButton disabled={disablePrev} onClick={showPrev}>Prev</PrevButton>
             <NextButton disabled={disableNext} onClick={showNext}>Next</NextButton>
-        </FooterWrap>
+        </PaginationWrap>
     );
 }
-export default Footer;
+export default Pagination;

@@ -2,7 +2,7 @@ import React from "react";
 import styled from 'styled-components';
 import formatDate from '../functions/formatDate';
 
-const Item = styled.li`
+const ItemWrapper = styled.li`
     margin-bottom: 10px;
     border-bottom: 1px dashed #4f4f4f;
     color: #4f4f4f;
@@ -14,8 +14,6 @@ const Item = styled.li`
 `;
 const Title = styled.h1`
     margin-bottom: 10px;
-
-
 `;
 const Link = styled.a`
     text-decoration: none;
@@ -29,17 +27,18 @@ const Link = styled.a`
     }
 `;
 
-const MainItem = ({ title, link, author, date }) => {
+const Item = ({params}) => {
+const { title, url, author_fullname, created } = params;
     return (
-        <Item>
+        <ItemWrapper>
             <article>
                 <Title>
-                    <Link href={link}>{title}</Link>
+                    <Link href={url}>{title}</Link>
                 </Title>
-                <p>Автор: {author ? author : 'не известен'}</p>
-                <p>Опубликован: {formatDate(date)}</p>
+                <p>Автор: {author_fullname ? author_fullname : 'не известен'}</p>
+                <p>Опубликован: {formatDate(created)}</p>
             </article>
-        </Item>
+        </ItemWrapper>
     )
 }
-export default MainItem;
+export default Item;

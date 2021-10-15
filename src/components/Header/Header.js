@@ -1,6 +1,6 @@
 import React, { useRef, useContext }  from "react";
 import styled from 'styled-components';
-import { Context } from '../functions/Context';
+import { Context } from '../Context/Context';
 import { Button } from "../Styled/Button";
 
 const HeaderWrap = styled.header`
@@ -17,14 +17,13 @@ const HeaderWrap = styled.header`
         padding-bottom: 10px;
     }
 `;
-const InputWrap = styled.div`
+const InputWrap = styled.form`
     position: relative;
     display: flex;
     flex-direction: column;
 `;
 const SearchInput = styled.input`
     height: 50px;
-    /* width: 300px; */
     max-width: 300px;
     border: none;
     border-radius: 10px;
@@ -56,18 +55,19 @@ const Header = () => {
     const inputRef = useRef();
 
     const {
-        postList: { setCompleteFetch, getFetch },
+        postList: { setComplete, getPostList },
         inputValue: { inputValue, setInputValue },
         labelText: { labelText },
         showOnPage: { showOnPage, setStartIndex, setStopIndex },
     } = useContext(Context);
 
-    const handleShowResult = val => {
-        setCompleteFetch(false);
+    const showResult = e => {
+        e.preventDefault();
+        setComplete(false);
         setInputValue('');
         setStartIndex(0);
         setStopIndex(showOnPage - 1);
-        getFetch(val);
+        getPostList(inputRef.current.value);
     };
 
     const handleChange = e => setInputValue(e.target.value);
@@ -75,22 +75,18 @@ const Header = () => {
     const checkChange = e => (e.target.value !== inputValue) &&
         handleChange(e);
 
-    const checkEnterKey = e => (e.keyCode === 13) &&
-        handleShowResult(e.target.value);
-
     return (
         <HeaderWrap>
-            <InputWrap>
+            <InputWrap id="search-form" onSubmit={showResult}>
                 <SearchInput ref={inputRef}
                     id="search"
                     value={inputValue}
                     onChange={handleChange}
                     onBlur={checkChange}
-                    onKeyUp={checkEnterKey}
                 />
                 <Label htmlFor="search">{labelText}</Label>
             </InputWrap>
-            <SearchButton onClick={() => handleShowResult(inputRef.current.value)}>
+            <SearchButton form="search-form" type="submit">
                 Показать
             </SearchButton>
         </HeaderWrap>

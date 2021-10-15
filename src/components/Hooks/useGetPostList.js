@@ -1,14 +1,14 @@
 import { useEffect, useState, useCallback } from 'react';
 import { setStorage, getStorage } from '../functions/handleStorage';
 
-export const usePostList = () => {
+export const useGetPostList = () => {
 
     const [postList, setPostList] = useState(null);
     const [error, setError] = useState(null);
     const [ mainTitle, setMainTitle ] = useState();
-    const [ completeFetch, setCompleteFetch ] = useState(false);
+    const [ complete, setComplete ] = useState(false);
 
-    const getFetch = useCallback(async (search) => {
+    const getPostList = useCallback(async (search) => {
         try {
             const link = `https://www.reddit.com/r/${search}/hot.json`;
             const result = await fetch(link);
@@ -17,15 +17,15 @@ export const usePostList = () => {
             setPostList(data);
             setMainTitle(search);
             setStorage(search);
-            setCompleteFetch(true);
+            setComplete(true);
         } catch (err) {
             setMainTitle('ошибка запроса')
             setError(err);
         }
     }, [setPostList]);
 
-    useEffect(() => (getStorage()) ? getFetch(getStorage()) :
-        setMainTitle('пока отсутствуют'), [getFetch]);
+    useEffect(() => (getStorage()) ? getPostList(getStorage()) :
+        setMainTitle('пока отсутствуют'), [getPostList]);
 
-    return { postList, error, mainTitle, getFetch, completeFetch, setCompleteFetch };
+    return { postList, error, mainTitle, getPostList, complete, setComplete };
 };

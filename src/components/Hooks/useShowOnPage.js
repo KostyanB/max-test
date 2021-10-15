@@ -1,27 +1,16 @@
 import { useState, useEffect } from 'react';
+import setting from '../../setting.json';
 
 export const useShowOnPage = () => {
-    // const show = settings?.showAmt;
-    const showQuantity = 10,
-        [ showOnPage, setShowOnPage ] = useState(),
-        [ startIndex, setStartIndex ] = useState(0),
-        [ stopIndex, setStopIndex ] = useState(),
-        [ settingsError, setSettingsError] = useState(null),
-        [ settings, setSettings] = useState(null);
+    const [ showOnPage, setShowOnPage ] = useState();
+    const [ startIndex, setStartIndex ] = useState(0);
+    const [ stopIndex, setStopIndex ] = useState(0);
 
     useEffect(() => {
-        (async () => {
-            try {
-                const result = await fetch('setting.json');
-                const res = await result.json();
-                const showAmt = res[0].showAmt;
-                setShowOnPage(showAmt);
-                setStopIndex(showAmt - 1);
-            } catch (err) {
-                setSettingsError(err);
-            }
-        })()
-    }, [])
+        const showAmt = setting.showAmt;
+        setShowOnPage(showAmt);
+        setStopIndex(showAmt - 1);
+    }, []);
 
-    return { showOnPage, setShowOnPage, startIndex, setStartIndex, stopIndex, setStopIndex, settingsError };
+    return { showOnPage, setShowOnPage, startIndex, setStartIndex, stopIndex, setStopIndex };
 }

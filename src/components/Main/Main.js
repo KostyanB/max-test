@@ -1,8 +1,7 @@
 import React, { useContext } from "react";
 import styled from 'styled-components';
-import { Context } from "../functions/Context";
-import {RepeatItem} from './RepeatItem';
-import MainItem from "./MainItem";
+import { Context } from "../Context/Context";
+import Item from "./Item";
 
 const MainWrap = styled.main`
     flex: auto;
@@ -33,33 +32,20 @@ const MainTitle = styled.h1`
 `;
 
 const Main = () => {
-
     const {
         showOnPage: { startIndex, stopIndex },
-        postList: { postList, mainTitle, completeFetch },
+        postList: { postList, mainTitle },
     } = useContext(Context);
 
     return (
         <MainWrap>
             <MainTitle>Результаты запроса: {mainTitle}</MainTitle>
             <ul>
-            {(completeFetch && postList) &&
-                <RepeatItem start={startIndex}
-                    stop={stopIndex}
-                >
-                    {(index) => (
-                    <MainItem key={index}
-                        title={postList[index].data.title}
-                        link={postList[index].data.url}
-                        author={postList[index].data.author_fullname}
-                        date={postList[index].data.created}
-                    />
-                )}
-                </RepeatItem>
-            }
+                {postList.slice(startIndex, stopIndex + 1).map((item, i) =>
+                        <Item key={i} params={item.data}/>)
+                }
             </ul>
         </MainWrap>
-
     )
 }
 export default Main;
